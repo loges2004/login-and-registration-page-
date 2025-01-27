@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Password</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center mt-5">Reset Password</h1>
+                <form id="resetForm" action="/reset-password" method="post" class="mt-4">
+                    <input type="hidden" id="token" name="token" value="">
+                    <div class="form-group">
+                        <label for="password">New Password:</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Set New Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const token = window.location.pathname.split('/').pop();
+        document.getElementById('token').value = token;
+
+        document.getElementById('resetForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Passwords do not match!'
+                });
+                return;
+            }
+
+            this.submit();
+        });
+    </script>
+</body>
+</html>
